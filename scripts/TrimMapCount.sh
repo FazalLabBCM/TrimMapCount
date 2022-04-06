@@ -20,7 +20,7 @@ export TMP=/storage/fazal/tmp
 export PATH=/storage/fazal/software/1_TrimMapCount/venv/bin:"${PATH}"
 
 # Define variables for project directories
-PROJECTDIR=/storage/fazal/pipelines/TrimMapCount/scripts
+SCRIPTDIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 GENOMEDIR=/storage/fazal/genome/human/GRCh38.104
 DATADIR="${1}"
 OUTPUTDIR="${2}"
@@ -66,7 +66,7 @@ do
     [ -f "${fq1}" ] || gunzip "${fq1}".gz
     [ -f "${fq2}" ] || gunzip "${fq2}".gz
     # Trim
-    perl "${PROJECTDIR}"/icSHAPE/scripts/trimming.pl \
+    perl "${SCRIPTDIR}"/icSHAPE/scripts/trimming.pl \
       -1 "${fq1}" \
       -2 "${fq2}" \
       -p "${trim1}" \
@@ -74,7 +74,7 @@ do
       -l 0 \
       -t 0 \
       -c phred33 \
-      -a "${PROJECTDIR}"/icSHAPE/data/adapter/adapter.fa \
+      -a "${SCRIPTDIR}"/icSHAPE/data/adapter/adapter.fa \
       -m 36
     # Zip fastqs
     echo "Zipping fastq files..."
