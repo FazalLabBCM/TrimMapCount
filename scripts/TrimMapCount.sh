@@ -49,7 +49,7 @@ do
   then
     echo "Trim reads in ${base} already complete; skipping re-trimming."
   else
-    echo "Trimming reads in ${base}. Estimated time for trimming is 30 minutes."
+    echo "Trimming reads in ${base}. Estimated time for trimming is 15-30 minutes."
     # Unzip fastq
     echo "Unzipping fastq files..."
     [ -f "${fq1}" ] || gunzip "${fq1}".gz
@@ -80,7 +80,7 @@ do
   then
     echo "Map reads in ${base} already complete; skipping re-mapping."
   else
-    echo "Mapping reads in ${base}. Estimated time for mapping is 30 minutes."
+    echo "Mapping reads in ${base}. Estimated time for mapping is 5-15 minutes."
     # Make sure fastqs are zipped
     [ -f "${trim1}.gz" ] || gzip "${trim1}"
     [ -f "${trim2}.gz" ] || gzip "${trim2}"
@@ -104,7 +104,7 @@ do
   then
     echo "Count reads in ${base} already complete; skipping re-counting."
   else
-    echo "Counting reads in ${base}. Estimated time for counting is 90 minutes."
+    echo "Counting reads in ${base}. Estimated time for counting is 30-90 minutes."
     # Make sure gtf and bam are unzipped
     [ -f "${gtf}" ] || gunzip "${gtf}.gz"
     [ -f "${bam}" ] || gunzip "${bam}.gz"
