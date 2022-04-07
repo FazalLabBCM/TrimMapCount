@@ -8,29 +8,18 @@
 #SBATCH --output=%j.TrimMapCount.log
 
 
-set -e
-unset PYTHONPATH
-
-# Avoid dumping too much temporary data into system tmp directory
-export TMPDIR=/storage/fazal/tmp
-export TEMP=/storage/fazal/tmp
-export TMP=/storage/fazal/tmp
-
-# Activate environment
-export PATH=/storage/fazal/software/1_TrimMapCount/venv/bin:"${PATH}"
-
 # Define variables for project directories
-SCRIPTDIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-GENOMEDIR=/storage/fazal/genome/human/GRCh38.104
-DATADIR="${1}"
-OUTPUTDIR="${2}"
+SCRIPTDIR="${1}"
+RAWDATADIR="${2}"
+DATADIR="${3}"
+GENOMEDIR="${4}"
 
 
 # Unzip gtf
 gtf="${GENOMEDIR}"/Homo_sapiens.GRCh38.104.gtf
 [ -f "${gtf}" ] || gunzip "${gtf}.gz"
 
-for fq in "${DATADIR}"/*R1.fastq*
+for fq in "${RAWDATADIR}"/*R1.fastq*
 do
   # Echo for debugging/reporting to the screen
   echo "________________________________________"
@@ -45,18 +34,18 @@ do
   fi
 
   # Define variables for filenames
-  fq1="${DATADIR}"/"${base}"R1.fastq
-  fq2="${DATADIR}"/"${base}"R2.fastq
-  trim1="${OUTPUTDIR}"/"${base}"R1_trim.fastq
-  trim2="${OUTPUTDIR}"/"${base}"R2_trim.fastq
-  bam_prefix="${OUTPUTDIR}"/"${base}"trim_star
+  fq1="${RAWDATADIR}"/"${base}"R1.fastq
+  fq2="${RAWDATADIR}"/"${base}"R2.fastq
+  trim1="${DATADIR}"/"${base}"R1_trim.fastq
+  trim2="${DATADIR}"/"${base}"R2_trim.fastq
+  bam_prefix="${DATADIR}"/"${base}"trim_star
   bam="${bam_prefix}"Aligned.sortedByCoord.out.bam
-  txt="${OUTPUTDIR}"/"${base}"aligned.txt
+  txt="${DATADIR}"/"${base}"aligned.txt
 
   # Trim reads
   echo "_______________________________"
   echo "STEP 1: TRIM READS"
-  if [[ -f "${OUTPUTDIR}"/"${base}"R1_trim.fastq.trimlog ]]
+  if [[ -f "${DATADIR}"/"${base}"R1_trim.fastq.trimlog ]]
   then
     echo "Trim reads in ${base} already complete; skipping re-trimming."
   else
@@ -87,7 +76,7 @@ do
   # Map/align to genome
   echo "_______________________________"
   echo "STEP 2: MAP READS TO GENOME"
-  if [[ -f "${OUTPUTDIR}"/"${base}"trim_starLog.final.out ]]
+  if [[ -f "${DATADIR}"/"${base}"trim_starLog.final.out ]]
   then
     echo "Map reads in ${base} already complete; skipping re-mapping."
   else
