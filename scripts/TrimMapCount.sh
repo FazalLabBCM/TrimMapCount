@@ -8,6 +8,8 @@
 #SBATCH --output=%j.TrimMapCount.log
 
 
+set -e
+
 # Define variables for project directories
 SCRIPTDIR="${1}"
 RAWDATADIR="${2}"

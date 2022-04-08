@@ -15,7 +15,7 @@ do
       echo "TrimMapCount"
       echo ""
       echo "Usage:"
-      echo "  TrimMapCount/scripts/main.sh --option <argument>"
+      echo "  TrimMapCount --option <argument>"
       echo ""
       echo "Options:"
       echo "  -h, --help                show this help message"
