@@ -1,0 +1,3 @@
+GENOMEDIR=/storage/fazal/genome/human/GRCh38.104
+ENVDIR=/storage/fazal/software/TrimMapCount/venv
+TEMPDIR=/storage/fazal/tmp
