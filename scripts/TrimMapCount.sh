@@ -15,10 +15,39 @@ SCRIPTDIR="${1}"
 RAWDATADIR="${2}"
 DATADIR="${3}"
 GENOMEDIR="${4}"
+fa="${GENOMEDIR}"/"Homo_sapiens.GRCh38.dna.primary_assembly.fa"
+gtf="${GENOMEDIR}"/"Homo_sapiens.GRCh38.104.gtf"
 
+
+# Generate genome
+if [[ -d "${GENOMEDIR}"/star ]]
+then
+  if [[ "$(ls -A ${GENOMEDIR}/star)" ]]
+  then
+    echo "Generate genome already complete; skipping re-generation."
+  else
+    echo "Generating genome. Estimate time for genome generation is 90 minutes."
+    # Make sure fasta and gtf are unzipped
+    [ -f "${fa}" ] || gunzip "${fa}".gz
+    [ -f "${gtf}" ] || gunzip "${gtf}".gz
+    # Generate genome index
+    STAR \
+      --runThreadN 8 \
+      --runMode genomeGenerate \
+      --genomeDir "${GENOMEDIR}"/star \
+      --genomeFastaFiles "${fa}" \
+      --sjdbGTFfile "${gtf}" \
+      --limitGenomeGenerateRAM 120000000000 \
+      --limitSjdbInsertNsj 4000000
+    # Zip fasta file
+    gzip "${fa}"
+  fi
+else
+  echo "Genome directory not found."
+  exit 1
+fi
 
 # Unzip gtf
-gtf="${GENOMEDIR}"/Homo_sapiens.GRCh38.104.gtf
 [ -f "${gtf}" ] || gunzip "${gtf}.gz"
 
 for fq in "${RAWDATADIR}"/*R1.fastq*
@@ -56,6 +85,9 @@ do
     echo "Unzipping fastq files..."
     [ -f "${fq1}" ] || gunzip "${fq1}".gz
     [ -f "${fq2}" ] || gunzip "${fq2}".gz
+    # Create FastQC Reports
+    echo "Creating FastQC reports..."
+    fastqc --quiet --outdir "${DATADIR}" "${fq1}" "${fq2}"
     # Trim
     perl "${SCRIPTDIR}"/icSHAPE/scripts/trimming.pl \
       -1 "${fq1}" \
@@ -123,9 +155,6 @@ do
     [ -f "${bam}.gz" ] || gzip "${bam}"
   fi
 done
-
-# Zip gtf
-# [ -f "${gtf}.gz" ] || gzip "${gtf}"
 
 echo "________________________________________"
 echo "DONE"
