@@ -3,7 +3,7 @@
 #SBATCH -n 8                        # Number of cores (-n)
 #SBATCH -N 1                        # Ensure that all cores are on one Node (-N)
 #SBATCH -t 8-12:00                  # Runtime in D-HH:MM, minimum of 10 minutes
-#SBATCH --mem=32G                   # Memory pool for all cores (see also --mem-per-cpu)
+#SBATCH --mem=128G                  # Memory pool for all cores (see also --mem-per-cpu)
 #SBATCH --job-name=TrimMapCount     # Short name for the job
 #SBATCH --output=%j.TrimMapCount.log
 
