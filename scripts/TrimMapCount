@@ -36,6 +36,13 @@ do
       echo ""
       echo "  -d, --data-dir DIR        path to directory for processed data files"
       echo "                            (default is same as raw data)"
+      echo ""
+      echo "  -a, --adapter FILE        if the default TruSeq adapter isn't the correct adapter for your"
+      echo "                            data (TrimMapCount/scripts/icSHAPE/data/adapter/adapter.fa), you"
+      echo "                            can supply the path to another adapter FASTA file for trimming"
+      echo ""
+      echo "  -i, --interactive         run the pipeline interactively instead of submitting a batch job"
+      echo "                            (make sure to switch to an interactive node)"
       echo "‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾"
       exit 0
       ;;
@@ -47,6 +54,15 @@ do
     -d|--data-dir)
       DATADIR="${2}"
       shift
+      shift
+      ;;
+    -a|--adapter)
+      ADAPTER_FILE="${2}"
+      shift
+      shift
+      ;;
+    -i|--interactive)
+      INTERACTIVE=TRUE
       shift
       ;;
     -g|--genome-dir)
@@ -86,6 +102,11 @@ if [[ -z "${DATADIR}" ]]
 then
   DATADIR="${RAWDATADIR}"
 fi
+if [[ -z "${ADAPTER_FILE}" ]]
+then
+  ADAPTER_FILE="${SCRIPTDIR}"/icSHAPE/data/adapter/adapter.fa
+fi
+
 
 
 # PREPARE ENVIRONMENT
@@ -101,6 +122,7 @@ export TMP="${TEMPDIR}"
 echo ""
 echo "  Raw data directory:        ${RAWDATADIR}"
 echo "  Processed data directory:  ${DATADIR}"
+#echo "  Adapter file:              ${ADAPTER_FILE}"
 #echo "  Genome directory:          ${GENOMEDIR}"
 #echo "  Environment directory:     ${ENVDIR}"
 #echo "  Temporary directory:       ${TEMPDIR}"
@@ -115,7 +137,14 @@ do
   read -p "Do you wish to start the TrimMapCount pipeline? [y/n] " yn
   case $yn in
     [Yy]*)
-      sbatch "${SCRIPTDIR}"/TrimMapCount.sh "${SCRIPTDIR}" "${RAWDATADIR}" "${DATADIR}" "${GENOMEDIR}"
+      if [[ "${INTERACTIVE}" == TRUE ]]
+      then
+        # Run pipeline interactively
+        "${SCRIPTDIR}"/TrimMapCount.sh "${SCRIPTDIR}" "${RAWDATADIR}" "${DATADIR}" "${GENOMEDIR}" "${ADAPTER_FILE}"
+      else
+        # Submit batch job
+        sbatch "${SCRIPTDIR}"/TrimMapCount.sh "${SCRIPTDIR}" "${RAWDATADIR}" "${DATADIR}" "${GENOMEDIR}" "${ADAPTER_FILE}"
+      fi
       break
       ;;
     [Nn]*)
