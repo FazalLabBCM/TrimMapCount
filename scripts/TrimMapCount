@@ -127,7 +127,12 @@ echo "  Processed data directory:  ${DATADIR}"
 #echo "  Environment directory:     ${ENVDIR}"
 #echo "  Temporary directory:       ${TEMPDIR}"
 echo ""
-echo "  Log file will be created in your current directory:  ${PWD}"
+if [[ "${INTERACTIVE}" == TRUE ]]
+then
+  echo "  Interactive mode enabled; log will display in the terminal."
+else
+  echo "  Log file will be created in your processed data directory."
+fi
 echo ""
 
 
@@ -143,7 +148,8 @@ do
         "${SCRIPTDIR}"/TrimMapCount.sh "${SCRIPTDIR}" "${RAWDATADIR}" "${DATADIR}" "${GENOMEDIR}" "${ADAPTER_FILE}"
       else
         # Submit batch job
-        sbatch "${SCRIPTDIR}"/TrimMapCount.sh "${SCRIPTDIR}" "${RAWDATADIR}" "${DATADIR}" "${GENOMEDIR}" "${ADAPTER_FILE}"
+        sbatch --job-name=TrimMapCount --output="${DATADIR}"%j.%x.log \
+        "${SCRIPTDIR}"/TrimMapCount.sh "${SCRIPTDIR}" "${RAWDATADIR}" "${DATADIR}" "${GENOMEDIR}" "${ADAPTER_FILE}"
       fi
       break
       ;;
