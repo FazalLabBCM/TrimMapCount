@@ -1,12 +1,9 @@
 #!/usr/bin/env bash
 
-#SBATCH -n 8                        # Number of cores (-n)
-#SBATCH -N 1                        # Ensure that all cores are on one Node (-N)
-#SBATCH -t 8-12:00                  # Runtime in D-HH:MM, minimum of 10 minutes
-#SBATCH --mem=122G                  # Memory pool for all cores (see also --mem-per-cpu)
-#SBATCH --job-name=TrimMapCount     # Short name for the job
-#SBATCH --output=%j.TrimMapCount.log
-
+#SBATCH -n 8                        # Number of cores
+#SBATCH -N 1                        # Number of nodes
+#SBATCH -t 4-12:00                  # Runtime in D-HH:MM
+#SBATCH --mem=32G                   # Memory pool for all cores
 
 set -e
 
@@ -19,8 +16,11 @@ ADAPTER_FILE="${5}"
 
 
 # Generate genome
-fa="${GENOMEDIR}"/"Homo_sapiens.GRCh38.dna.primary_assembly.fa"
-gtf="${GENOMEDIR}"/"Homo_sapiens.GRCh38.104.gtf"
+shopt -s extglob
+fa=$(ls "${GENOMEDIR}"/*@(.fa|.fna|.fasta|.ffn|.faa|.frn|.fa.gz|.fna.gz|.fasta.gz|.ffn.gz|.faa.gz|.frn.gz))
+if [[ "${fa}" == *.gz ]]; then fa="${fa%.gz}"; fi
+gtf=$(ls "${GENOMEDIR}"/*@(.gtf|.gff|.gtf.gz|.gff.gz))
+if [[ "${gtf}" == *.gz ]]; then gtf="${gtf%.gz}"; fi
 "${SCRIPTDIR}"/0_GenerateGenome.sh "${GENOMEDIR}" "${fa}" "${gtf}"
 
 for fq in "${RAWDATADIR}"/*R1.fastq*
