@@ -1,4 +1,8 @@
-# TrimMapCount
+# Data Alignment for RNA-Seq Experiments
+
+The TrimMapCount pipeline is designed to trim, map, and count your FASTQ reads with 
+[icSHAPE](https://github.com/qczhang/icSHAPE), [STAR](https://github.com/alexdobin/STAR), 
+and [HTSeq](https://github.com/htseq/htseq).
 
 
 ## Setup
@@ -13,7 +17,8 @@ on your local computing environment.
 Rename your raw FASTQ files so that each file name has these 5 things (in order and separated 
 by underscores):
    1. **Subcellular location** (can't contain an underscore)
-      * Where APEX is targeted and/or which protein the enzyme is fused to
+      * Where APEX is targeted and/or which protein the enzyme is fused to (see the note below if you 
+        are not using APEX-seq)
    2. **Experimental condition or "none"** (can't contain an underscore)
       * Could be a time limit, cell type, antibiotic treatment, etc.
    3. **"target" or "control"** (first letter can be capitalized)
@@ -29,6 +34,21 @@ is attached to the NES protein) that have been treated with puromycin might be n
    Cytosol-NES_puromycin_control_1_R1.fastq
    Cytosol-NES_puromycin_control_2_R1.fastq
    ```
+
+> **Note:**
+> This pipeline isn't exclusive to APEX-seq experiments. For a generic RNA-Seq experiment, 
+> replace the subcellular location with an additional experimental condition. For example, you 
+> could name the file starting with the cell type instead: `HEK293_puromycin_target_1.R1.fastq`. 
+> Need to label your data files with more than two experimental conditions? Just separate 
+> the extra conditions with a hyphen or period like this: `HEK293-PloyA_puromycin.1min_target_1.R1.fastq`. 
+> No matter what the experimental conditions are, there must be at least one target and one control 
+> for every condition, and both targets and controls have to be named the same. In the last example, 
+> the target could be treated with puromycin for 1 minute and the control not treated with puromycin. 
+> Alternatively, the target could be polyadenylated RNA while the control is non polyadenylated RNA, 
+> or the target could be HEK293 cells with HepG2 cells as the control. For our APEX-seq experiments, 
+> "target" means we labeled RNA from that sample in a specific subcellular location by adding 
+> H<sub>2</sub>O<sub>2</sub> to the cells, while "control" means unlabeled. Decide what "target" and 
+> "control" mean for your experiment, and write it down.
 
 ### Sorting raw data files
 
