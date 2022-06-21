@@ -1,6 +1,6 @@
 # Data Alignment for RNA-Seq Experiments
 
-The TrimMapCount pipeline is designed to trim, map, and count your FASTQ reads with 
+The TrimMapCount pipeline is designed to trim, map, and count FASTQ reads with 
 [icSHAPE](https://github.com/qczhang/icSHAPE), [STAR](https://github.com/alexdobin/STAR), 
 and [HTSeq](https://github.com/htseq/htseq).
 
