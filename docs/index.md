@@ -17,7 +17,6 @@ on your local computing environment.
 Rename your raw FASTQ files so that each file name has these 5 things (in order and separated 
 by underscores):
 <img src="img/filename_example.png" width="60%" height="60%">
-
    1. **Targeted location/protein** (can't contain an underscore)
       * For an APEX-seq experiment, subcellular location where APEX is targeted and/or which protein the 
         enzyme is fused to
@@ -40,15 +39,6 @@ by underscores):
         > and write it down.
    4. **A number to indicate which target or control sample** (one digit 0-9)
    5. **"R1.fastq" or "R2.fastq"** (or "R1.fastq.gz" and "R2.fastq.gz" for zipped files)
-
-For example, single-end sequencing data (R1 only) from cytosol APEX cells (where the APEX2 enzyme 
-is attached to the NES protein) that have been treated with puromycin might be named like this:
-   ```
-   Cytosol-NES_puromycin_target_1_R1.fastq
-   Cytosol-NES_puromycin_target_2_R1.fastq
-   Cytosol-NES_puromycin_control_1_R1.fastq
-   Cytosol-NES_puromycin_control_2_R1.fastq
-   ```
 
 
 ### Sorting raw data files
