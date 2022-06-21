@@ -16,13 +16,13 @@ on your local computing environment.
 
 Rename your raw FASTQ files so that each file name has these 5 things (in order and separated 
 by underscores):
-   1. **Subcellular location** (can't contain an underscore)
-      * Where APEX is targeted and/or which protein the enzyme is fused to (see the note below if you 
+   1. **Targeted location/protein** (can't contain an underscore)
+      * For an APEX-seq experiment, where APEX is targeted and/or which protein the enzyme is fused to (see the note below if you 
         are not using APEX-seq)
    2. **Experimental condition or "none"** (can't contain an underscore)
       * Could be a time limit, cell type, antibiotic treatment, etc.
    3. **"target" or "control"** (first letter can be capitalized)
-      * Whether H<sub>2</sub>O<sub>2</sub> was added (target) or not (control)
+      * For an APEX-seq experiment, whether the targeted location was labeled by adding H<sub>2</sub>O<sub>2</sub> (target) or not (control)
    4. **A number to indicate which target or control sample** (one digit 0-9)
    5. **"R1.fastq" or "R2.fastq"** (or "R1.fastq.gz" and "R2.fastq.gz" for zipped files)
 
@@ -36,24 +36,28 @@ is attached to the NES protein) that have been treated with puromycin might be n
    ```
 
 > **Note:**
-> This pipeline isn't exclusive to APEX-seq experiments. For a generic RNA-Seq experiment, 
-> replace the subcellular location with an additional experimental condition. For example, you 
+> This pipeline is not exclusive to APEX-seq experiments. For a generic RNA-Seq experiment, 
+> replace the targeted location/protein with an additional experimental condition. For example, you 
 > could name the file starting with the cell type instead: `HEK293_puromycin_target_1.R1.fastq`. 
 > Need to label your data files with more than two experimental conditions? Just separate 
 > the extra conditions with a hyphen or period like this: `HEK293-PloyA_puromycin.1min_target_1.R1.fastq`. 
 > No matter what the experimental conditions are, there must be at least one target and one control 
-> for every condition, and both targets and controls have to be named the same. In the last example, 
-> the target could be treated with puromycin for 1 minute and the control not treated with puromycin. 
-> Alternatively, the target could be polyadenylated RNA while the control is non polyadenylated RNA, 
-> or the target could be HEK293 cells with HepG2 cells as the control. For our APEX-seq experiments, 
-> "target" means we labeled RNA from that sample in a specific subcellular location by adding 
-> H<sub>2</sub>O<sub>2</sub> to the cells, while "control" means unlabeled. Decide what "target" and 
-> "control" mean for your experiment, and write it down.
+> for every condition, and both targets and controls have to be named the same.
+
+> **Note:**
+> The label "target" or "control" could mean something different depending on your experiment. In the 
+> example `HEK293-PloyA_puromycin.1min_target_1.R1.fastq`, the "target" could be treated with puromycin 
+> for 1 minute and the "control" not treated with puromycin. Alternatively, the "target" could be 
+> polyadenylated RNA while the "control" is non polyadenylated RNA, or the "target" could be HEK293 
+> cells with HepG2 cells as the "control". For our APEX-seq experiments, "target" means we added 
+> H<sub>2</sub>O<sub>2</sub> to the cells. Decide what "target" and "control" mean for your experiment, 
+> and write it down.
+
 
 ### Sorting raw data files
 
 To save lots of time, separate your FASTQ files into subfolders for each unique combination 
-of subcellular location and experimental condition (like the picture below). This will allow 
+of targeted location/protein and experimental condition (like the picture below). This will allow 
 you to run the TrimMapCount pipeline for each subfolder of raw data at the same time.
 
 <img src="img/filestructure_example.png" width="60%" height="60%">
@@ -72,7 +76,7 @@ you to run the TrimMapCount pipeline for each subfolder of raw data at the same 
 3. Run the following code (replacing the file paths with the paths to your experiment's 
    raw data and processed data subfolders):
    ```
-   TrimMapCount -r /path/to/rawdata -d /path/to/data
+   TrimMapCount -r /path/to/rawdata/location_condition -d /path/to/data/location_condition
    ```
 
 4. Make sure that the raw data and processed data file paths are correct. Then enter "y" to 
