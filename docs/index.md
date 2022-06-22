@@ -34,7 +34,7 @@ by underscores):
         > The label "target" or "control" could mean something different depending on your experiment. If your  
         > file was named `HEK293.PloyA_puromycin.1min_target_1.R1.fastq`, the "target" could be treated with puromycin 
         > for 1 minute and the "control" not treated with puromycin. Alternatively, the "target" could be 
-        > polyadenylated RNA while the "control" is non polyadenylated RNA, or the "target" could be HEK293 
+        > polyadenylated RNA with non polyadenylated RNA as the "control", or the "target" could be HEK293 
         > cells with HepG2 cells as the "control". Decide what "target" and "control" mean for your experiment, 
         > and write it down.
    4. **A number to indicate which target or control sample** (one digit 0-9)
@@ -45,7 +45,7 @@ by underscores):
 
 To save lots of time, separate your FASTQ files into subfolders for each unique combination 
 of targeted location/protein and experimental condition (like the picture below). This will allow 
-you to run the TrimMapCount pipeline for each subfolder of raw data at the same time.
+you to run the TrimMapCount pipeline for each subfolder of raw data simultaneously.
 
 <img src="img/filestructure_example.png" width="60%" height="60%">
 
