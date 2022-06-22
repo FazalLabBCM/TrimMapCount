@@ -77,6 +77,6 @@ You can check the log file in your processed data folder to see the progress of 
 If you encounter any errors, see our 
 [troubleshooting](https://fazallabbcm.github.io/TrimMapCount/Troubleshooting) page for help.
 
-Once [TrimMapCount](https://fazallabbcm.github.io/TrimMapCount) has finished, you will have all of 
-the data files necessary for the [ProcessCounts](https://fazallabbcm.github.io/ProcessCounts) and 
+Once TrimMapCount has finished, you will have all of the data files necessary for the 
+[ProcessCounts](https://fazallabbcm.github.io/ProcessCounts) and 
 [BamToBigWig](https://fazallabbcm.github.io/BamToBigWig) pipelines.
