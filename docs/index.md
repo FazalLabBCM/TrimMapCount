@@ -47,7 +47,7 @@ To save lots of time, separate your FASTQ files into subfolders for each unique 
 of targeted location/protein and experimental condition (like the picture below). This will allow 
 you to run the TrimMapCount pipeline for each subfolder of raw data simultaneously.
 
-<img src="img/filestructure_example.png" width="60%" height="60%">
+<img src="img/filestructure_example.png" width="80%" height="80%">
 
 
 ## Running the Pipeline
