@@ -23,8 +23,8 @@ by underscores):
         > Note:
         > This pipeline is not exclusive to APEX-seq experiments. For a generic RNA-Seq experiment, 
         > replace the targeted location/protein with an experimental condition (see next list item).
-   2. **Experimental condition or "none"** (can't contain an underscore)
-      * Could be a time limit, cell type, antibiotic treatment, etc.
+   2. **Experimental condition** (can't contain an underscore)
+      * Could be a time limit, cell type, antibiotic treatment, etc., or "basal" for no condition
         > Note:
         > Need to label your data files with more experimental conditions? Just separate the extra conditions 
         > with a hyphen or period like this: `CellLine-TargetedProtein_DrugTreatment.TimeLimit_target_1.R1.fastq`. 
