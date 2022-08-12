@@ -148,7 +148,7 @@ do
         "${SCRIPTDIR}"/TrimMapCount.sh "${SCRIPTDIR}" "${RAWDATADIR}" "${DATADIR}" "${GENOMEDIR}" "${ADAPTER_FILE}"
       else
         # Submit batch job
-        sbatch --job-name=TrimMapCount --output="${DATADIR}"%j.%x.log \
+        sbatch --job-name=TrimMapCount --output="${DATADIR}"/%j.%x.log \
         "${SCRIPTDIR}"/TrimMapCount.sh "${SCRIPTDIR}" "${RAWDATADIR}" "${DATADIR}" "${GENOMEDIR}" "${ADAPTER_FILE}"
       fi
       break
