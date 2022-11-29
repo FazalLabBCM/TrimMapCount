@@ -49,11 +49,9 @@ do
   echo "_______________________________"
   echo "STEP 1: TRIM ADAPTERS"
   "${SCRIPTDIR}"/1_TrimAdapters.sh "${SCRIPTDIR}" "${DATADIR}" "${base}" "${fq1}" "${fq2}" "${trim1}" "${trim2}" "${ADAPTER_FILE}"
-
   echo "_______________________________"
   echo "STEP 2: MAP READS TO GENOME"
   "${SCRIPTDIR}"/2_MapToGenome.sh "${DATADIR}" "${GENOMEDIR}" "${base}" "${trim1}" "${trim2}" "${bam_prefix}"
-
   echo "_______________________________"
   echo "STEP 3: COUNT READS"
   "${SCRIPTDIR}"/3_CountReads.sh "${gtf}" "${base}" "${bam}" "${counts}"
